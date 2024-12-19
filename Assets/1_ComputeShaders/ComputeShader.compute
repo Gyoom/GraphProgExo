@@ -1,0 +1,13 @@
+#pragma kernel CSMain
+
+RWTexture2D<float4> Result;
+
+[numthreads(8, 8, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    float4 col = Result[id.xy];
+
+    Result[id.xy] = float4(1 - col.r, 1 - col.g, 1 - col.b, 1.0);
+}
+
+

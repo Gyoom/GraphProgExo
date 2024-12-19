@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6149695840424655459}
   - component: {fileID: 1851699891925352453}
   m_Layer: 0
-  m_Name: ShieldHit
+  m_Name: VE_ShieldHit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

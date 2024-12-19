@@ -678,7 +678,7 @@
     },
     "m_PreviewData": {
         "serializedMesh": {
-            "m_SerializedMesh": "{\"mesh\":{\"instanceID\":0}}",
+            "m_SerializedMesh": "{\"mesh\":{\"fileID\":289301614986012343,\"guid\":\"290b410835e623841ae1a363eafb579b\",\"type\":3}}",
             "m_Guid": ""
         },
         "preventRotation": false
@@ -2105,7 +2105,7 @@
     "m_Title": "Breath vertex",
     "m_Position": {
         "x": -1529.0001220703125,
-        "y": -1387.0001220703125
+        "y": -1288.0
     }
 }
 

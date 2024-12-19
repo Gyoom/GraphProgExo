@@ -1,0 +1,20 @@
+#pragma kernel CSMain
+
+RWTexture2D<float4> Result;
+
+[numthreads(8, 8, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    float3 sum = float3(0, 0, 0);
+    for (int dx = -10; dx <= 10; dx++)
+    {
+        for (int dy = -10; dy <= 10; dy++)
+        {
+            sum += Result[id.xy + float2(dx, dy)].xyz;
+        }
+    }
+    sum /= 441;
+
+    Result[id.xy] = float4(sum.xyz, 1);
+}
+
