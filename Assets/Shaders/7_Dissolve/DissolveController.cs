@@ -13,16 +13,21 @@ public class DissolveController : MonoBehaviour
     [Header("VFX")]
     public VisualEffect vfxDissolve;
 
-    private Material[] skinnedMaterials;
+    Material[] skinnedMaterials;
+    Animator animator;
+
+
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();    
         if (SkinnedMeshRenderer != null) { 
             skinnedMaterials = SkinnedMeshRenderer.materials;
         }
     }
 
     public void StartDeathCoroutine() {
+        animator.SetTrigger("Death");
         StartCoroutine(DissolveMesh());
     }
 

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - CinemachineTarget
   - Shield
+  - Weapon
   layers:
   - Default
   - TransparentFX

@@ -10,11 +10,21 @@ public class PlayerController : MonoBehaviour
     [Header("Shield")]
     public GameObject vfxShield;
 
+    [Header("Slash")]
+    [SerializeField]
+    private GameObject Slashs;
+    [SerializeField]
+    private float SlashDelay;
+    [SerializeField]
+    private Transform SlashPos;
+
     ThirdPersonController Controller;
     Animator animator;
 
     bool shieldActive = false;
-    bool canHit = true;
+
+    [HideInInspector]
+    public bool attack = false;
 
     void Start()
     {
@@ -26,43 +36,48 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Q)) {
-            animator.SetTrigger("Death");
-            GetComponent<DissolveController>().StartDeathCoroutine();
-            Controller.CanMove = false;
-
-        }
-
         if (Input.GetKeyDown(KeyCode.E) && vfxShield)
         {     
             vfxShield.SetActive(!shieldActive);
             shieldActive = !shieldActive;
-            canHit = false;
-            StartCoroutine(DelayHit());
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !shieldActive && !attack)
         {
             animator.SetTrigger("SwordAttack");
+            StartCoroutine(SwordVfx());
+            attack = true;
         }
 
     }
 
-    private void OnControllerColliderHit(ControllerColliderHit hit)
+    // Hit shield by body contact
+    /*private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.gameObject.CompareTag("Shield") &&  canHit)
+        if (hit.gameObject.CompareTag("Shield") && canHit)
         {
-            Debug.Log("AAA");
             hit.transform.GetComponent<SpawnShieldRipples>().DisplayRipples(hit.point);
 
             canHit = false;
             StartCoroutine(DelayHit());
         }
-    }
+    }*/
 
-    IEnumerator DelayHit() {
-        yield return new WaitForSeconds(0.5f);
+    IEnumerator SwordVfx() {
+        Controller.CanMove = false;
 
-        canHit = true;
+        yield return new WaitForSeconds(SlashDelay);
+
+        Slashs.transform.position = SlashPos.transform.position;
+        VisualEffect effect = Slashs.transform.GetChild(0).GetComponent<VisualEffect>();
+        if (effect != null)
+        {
+            effect.SetFloat("AlphaSecondaryColor", Random.Range(0.0f, 8.0f));
+            effect.Play();
+        }
+        yield return new WaitForSeconds(1f);
+
+        Controller.CanMove = true;
+        attack = false;
     }
 }
